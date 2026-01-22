@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: aap25-bootstrap
+  name: aap25
   namespace: openshift-gitops
   annotations:
     argocd.argoproj.io/sync-wave: "1"
