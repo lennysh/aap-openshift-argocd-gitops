@@ -1,0 +1,70 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: installplan-approver
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
+    argocd.argoproj.io/hook: Sync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+spec:
+  ttlSecondsAfterFinished: 86400
+  backoffLimit: 10
+  template:
+    spec:
+      serviceAccountName: installplan-approver
+      restartPolicy: OnFailure
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: approver
+          image: registry.redhat.io/openshift4/ose-cli:v4.14
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+          command:
+            - /bin/bash
+            - -c
+            - |
+              set -e
+              echo "Waiting for InstallPlan to be created..."
+
+              # Wait up to 5 minutes for an InstallPlan to appear
+              for i in {1..60}; do
+                INSTALLPLAN=$(oc get installplan -o jsonpath='{.items[?(@.spec.approved==false)].metadata.name}' 2>/dev/null || true)
+                if [ -n "$INSTALLPLAN" ]; then
+                  echo "Found pending InstallPlan: $INSTALLPLAN"
+                  break
+                fi
+                echo "Waiting for InstallPlan... ($i/60)"
+                sleep 5
+              done
+
+              if [ -z "$INSTALLPLAN" ]; then
+                echo "No pending InstallPlan found. Checking if already approved..."
+                APPROVED=$(oc get installplan -o jsonpath='{.items[?(@.spec.approved==true)].metadata.name}' 2>/dev/null || true)
+                if [ -n "$APPROVED" ]; then
+                  echo "InstallPlan already approved: $APPROVED"
+                  exit 0
+                fi
+                echo "ERROR: No InstallPlan found after waiting"
+                exit 1
+              fi
+
+              # Approve the InstallPlan
+              echo "Approving InstallPlan: $INSTALLPLAN"
+              oc patch installplan "$INSTALLPLAN" --type merge --patch '{"spec":{"approved":true}}'
+              echo "InstallPlan approved successfully"
+          resources:
+            requests:
+              cpu: 10m
+              memory: 64Mi
+            limits:
+              cpu: 100m
+              memory: 128Mi
+...
