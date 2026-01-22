@@ -10,7 +10,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/lennysh/aap-openshift-argocd-gitops.git
-    path: aap-opa
+    path: app-aap-opa
     targetRevision: HEAD
     directory:
       recurse: true
