@@ -24,7 +24,7 @@ spec:
     name: hub
     storage_type: file
   lightspeed:
-    disabled: false
+    disabled: true
   extra_settings:
     - setting: REDIRECT_IS_HTTPS
       value: '"True"'

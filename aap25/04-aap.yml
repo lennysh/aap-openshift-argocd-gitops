@@ -16,15 +16,15 @@ spec:
     disabled: false
     name: ac
   eda:
-    disabled: false
+    disabled: true
     name: eda
   hub:
-    disabled: false
+    disabled: true
     file_storage_size: 50Gi
     name: hub
     storage_type: file
   lightspeed:
-    disabled: false
+    disabled: true
   extra_settings:
     - setting: REDIRECT_IS_HTTPS
       value: '"True"'
