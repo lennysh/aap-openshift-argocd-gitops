@@ -3,7 +3,8 @@ apiVersion: v1
 kind: Namespace
 metadata:
   labels:
-    app.kubernetes.io/instance: cluster-configs
+    kubernetes.io/metadata.name: aap-opa
+    argocd.argoproj.io/managed-by: openshift-gitops
   name: aap-opa
   annotations:
     argocd.argoproj.io/sync-wave: "1"
