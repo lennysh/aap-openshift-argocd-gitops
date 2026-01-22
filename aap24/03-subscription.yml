@@ -12,7 +12,7 @@ spec:
   # Check the available channels in your cluster for the exact name.
   channel: stable-2.4
   # installPlanApproval determines if OLM automatically upgrades the operator.
-  installPlanApproval: Automatic
+  installPlanApproval: Manual
   # The package name for the AAP operator.
   name: ansible-automation-platform-operator
   # The CatalogSource that provides the operator package.
