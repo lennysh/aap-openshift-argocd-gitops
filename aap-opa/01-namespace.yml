@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    app.kubernetes.io/instance: cluster-configs
+  name: aap-opa
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  finalizers:
+    - kubernetes
+...

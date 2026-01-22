@@ -1,0 +1,20 @@
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
+  labels:
+    app: opa
+    app.kubernetes.io/instance: cluster-configs
+  name: opa
+  namespace: aap-opa
+spec:
+  port:
+    targetPort: http
+  to:
+    kind: Service
+    name: opa
+    weight: 100
+  wildcardPolicy: None
+...

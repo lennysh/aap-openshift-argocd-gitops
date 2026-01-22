@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: aap26-bootstrap
+  name: aap-opa
   namespace: openshift-gitops
   annotations:
     argocd.argoproj.io/sync-wave: "1"
@@ -10,14 +10,14 @@ spec:
   project: default
   source:
     repoURL: https://github.com/lennysh/aap-openshift-argocd-gitops.git
-    path: aap26
+    path: aap-opa
     targetRevision: HEAD
     directory:
       recurse: true
       jsonnet: {}
   destination:
     server: https://kubernetes.default.svc
-    namespace: aap26
+    namespace: aap-opa
   syncPolicy:
     # automated:
     #   prune: true
