@@ -2,26 +2,26 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: aap25-deploy
+  name: aap26-bootstrap
   namespace: openshift-gitops
   annotations:
-    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   project: default
   source:
     repoURL: https://github.com/lennysh/aap-openshift-argocd-gitops.git
-    path: aap25-deploy
+    path: aap26
     targetRevision: HEAD
     directory:
       recurse: true
       jsonnet: {}
   destination:
     server: https://kubernetes.default.svc
-    namespace: aap25
-  # syncPolicy:
-  #   syncOptions:
-  #     - ServerSideApply=true
+    namespace: aap26
+  syncPolicy:
     # automated:
     #   prune: true
     #   selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
 ...
