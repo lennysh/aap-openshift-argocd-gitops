@@ -3,13 +3,13 @@ apiVersion: aap.ansible.com/v1alpha1
 kind: AnsibleAutomationPlatform
 metadata:
   name: aap
-  namespace: aap25
+  namespace: aap26
   annotations:
-    argocd.argoproj.io/sync-wave: "6"
+    argocd.argoproj.io/sync-wave: "4"
   labels:
     app.kubernetes.io/managed-by: aap-operator
     app.kubernetes.io/name: aap
-    app.kubernetes.io/operator-version: '2.5'
+    app.kubernetes.io/operator-version: ''
     app.kubernetes.io/part-of: aap
 spec:
   controller:
