@@ -1,0 +1,43 @@
+---
+apiVersion: automationcontroller.ansible.com/v1beta1
+kind: AutomationController
+metadata:
+  name: ac
+  namespace: aap24
+  annotations:
+    argocd.argoproj.io/sync-wave: "6"
+  labels:
+    app.kubernetes.io/component: automationcontroller
+    app.kubernetes.io/managed-by: automationcontroller-operator
+    app.kubernetes.io/operator-version: ''
+    app.kubernetes.io/part-of: ac
+spec:
+  admin_user: admin
+  auto_upgrade: true
+  create_preload_data: true
+  garbage_collect_secrets: false
+  image_pull_policy: IfNotPresent
+  ingress_type: Route
+  ipv6_disabled: false
+  loadbalancer_ip: ''
+  loadbalancer_port: 80
+  loadbalancer_protocol: http
+  metrics_utility_cronjob_gather_schedule: '@hourly'
+  metrics_utility_cronjob_report_schedule: '@monthly'
+  metrics_utility_enabled: false
+  metrics_utility_pvc_claim_size: 5Gi
+  no_log: true
+  postgres_keepalives_count: 5
+  postgres_keepalives_idle: 5
+  postgres_keepalives_interval: 5
+  postgres_keepalives: true
+  postgres_storage_class: lvms-vg1
+  projects_persistence: false
+  projects_storage_access_mode: ReadWriteMany
+  projects_storage_size: 8Gi
+  replicas: 1
+  route_tls_termination_mechanism: Edge
+  service_type: ClusterIP
+  set_self_labels: true
+  task_privileged: false
+...

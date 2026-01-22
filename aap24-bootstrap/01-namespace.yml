@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: aap24
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+  labels:
+    kubernetes.io/metadata.name: aap24
+    pod-security.kubernetes.io/audit: restricted
+    pod-security.kubernetes.io/audit-version: latest
+    pod-security.kubernetes.io/warn: restricted
+    pod-security.kubernetes.io/warn-version: latest
+spec:
+  finalizers:
+    - kubernetes
+...

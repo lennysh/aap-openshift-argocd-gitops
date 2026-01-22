@@ -1,0 +1,16 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: argocd-aap26-manager
+  namespace: aap26
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+rules:
+  - apiGroups:
+      - aap.ansible.com
+    resources:
+      - "*"
+    verbs:
+      - "*"
+...

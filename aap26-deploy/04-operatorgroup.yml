@@ -1,0 +1,11 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: aap26-argo-deploy-og
+  namespace: aap26
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
+spec:
+  targetNamespaces:
+    - aap26
+...
