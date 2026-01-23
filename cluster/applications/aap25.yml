@@ -12,7 +12,6 @@ spec:
     repoURL: https://github.com/lennysh/aap-openshift-argocd-gitops.git
     path: app-aap25
     targetRevision: HEAD
-    kustomize: {}
   destination:
     server: https://kubernetes.default.svc
     namespace: aap25
