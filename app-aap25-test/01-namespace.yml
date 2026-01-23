@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: aap25-test
+  name: aap25-test2
   annotations:
     argocd.argoproj.io/sync-wave: "1"
   labels:
