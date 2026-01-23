@@ -6,6 +6,8 @@ metadata:
   namespace: openshift-gitops
   annotations:
     argocd.argoproj.io/sync-wave: "1"
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
@@ -14,7 +16,6 @@ spec:
     targetRevision: HEAD
     directory:
       recurse: true
-      jsonnet: {}
   destination:
     server: https://kubernetes.default.svc
     namespace: aap-opa

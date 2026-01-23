@@ -2,11 +2,10 @@
 apiVersion: org.eclipse.che/v2
 kind: CheCluster
 metadata:
-  annotations:
-    che.eclipse.org/checluster-defaults-cleanup: >-
-      {"containers.resources":"true","spec.components.dashboard.headerMessage":"true","spec.components.pluginRegistry.openVSXURL":"true","spec.devEnvironments.defaultComponents":"true","spec.devEnvironments.defaultEditor":"true","spec.devEnvironments.disableContainerBuildCapabilities":"true"}
   name: devspaces
-  namespace: openshift-operators
+  namespace: openshift-devspaces
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
 spec:
   components:
     cheServer:
@@ -32,9 +31,6 @@ spec:
     startTimeoutSeconds: 300
     storage:
       pvcStrategy: per-user
-  gitServices:
-    gitlab:
-      - secretName: gitlab-oauth-config
   networking:
     auth:
       gateway:

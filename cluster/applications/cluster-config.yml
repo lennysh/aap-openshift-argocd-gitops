@@ -2,22 +2,22 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: aap26
+  name: cluster-config
   namespace: openshift-gitops
   annotations:
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "0"
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
-    repoURL: https://github.com/lennysh/aap-openshift-argocd-gitops.git
-    path: app-aap26
+    repoURL: https://github.com/lennysh/aap-openshift-argocd-gitops-demo.git
+    path: cluster
     targetRevision: HEAD
-    kustomize: {}
+    directory:
+      recurse: true
   destination:
     server: https://kubernetes.default.svc
-    namespace: aap26
   syncPolicy:
     automated:
       prune: true
@@ -35,4 +35,3 @@ spec:
         duration: 5s
         factor: 2
         maxDuration: 5m
-...

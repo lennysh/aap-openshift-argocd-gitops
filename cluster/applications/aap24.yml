@@ -6,12 +6,15 @@ metadata:
   namespace: openshift-gitops
   annotations:
     argocd.argoproj.io/sync-wave: "1"
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
     repoURL: https://github.com/lennysh/aap-openshift-argocd-gitops.git
     path: app-aap24
     targetRevision: HEAD
+    kustomize: {}
   destination:
     server: https://kubernetes.default.svc
     namespace: aap24

@@ -5,7 +5,9 @@ metadata:
   name: devspaces
   namespace: openshift-gitops
   annotations:
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "20"
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
@@ -14,10 +16,9 @@ spec:
     targetRevision: HEAD
     directory:
       recurse: true
-      jsonnet: {}
   destination:
     server: https://kubernetes.default.svc
-    namespace: openshift-operators
+    namespace: openshift-devspaces
   syncPolicy:
     automated:
       prune: true
@@ -34,5 +35,10 @@ spec:
       backoff:
         duration: 5s
         factor: 2
-        maxDuration: 5m
-...
+        maxDuration: 10m
+  ignoreDifferences:
+    - group: org.eclipse.che
+      kind: CheCluster
+      name: devspaces
+      jsonPointers:
+        - /spec
