@@ -10,7 +10,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/lennysh/aap-openshift-argocd-gitops.git
-    path: app-aap25-test2
+    path: app-aap25-test
     targetRevision: HEAD
     kustomize: {}
   destination:
