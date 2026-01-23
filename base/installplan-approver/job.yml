@@ -4,7 +4,9 @@ kind: Job
 metadata:
   name: installplan-approver
   annotations:
-    argocd.argoproj.io/sync-wave: "2.5"
+    argocd.argoproj.io/sync-wave: "3.5"
+    argocd.argoproj.io/hook: Sync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
 spec:
   ttlSecondsAfterFinished: 86400
   backoffLimit: 10
