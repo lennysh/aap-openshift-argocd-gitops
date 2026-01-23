@@ -16,9 +16,20 @@ spec:
     server: https://kubernetes.default.svc
     namespace: aap26
   syncPolicy:
-    # automated:
-    #   prune: true
-    #   selfHeal: true
-    # syncOptions:
-    #   - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=false
+      - PrunePropagationPolicy=foreground
+      - PruneLast=true
+      - SkipDryRunOnMissingResource=true
+      - RespectIgnoreDifferences=true
+      - ServerSideApply=true
+    retry:
+      limit: 10
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 5m
 ...
