@@ -4,7 +4,7 @@ kind: Role
 metadata:
   name: installplan-approver
   annotations:
-    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/sync-wave: "3.6"
 rules:
   - apiGroups:
       - operators.coreos.com
@@ -14,4 +14,3 @@ rules:
       - get
       - list
       - patch
-...

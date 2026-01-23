@@ -4,7 +4,7 @@ kind: Job
 metadata:
   name: installplan-approver
   annotations:
-    argocd.argoproj.io/sync-wave: "4"
+    argocd.argoproj.io/sync-wave: "3.8"
     argocd.argoproj.io/hook: Sync
     argocd.argoproj.io/hook-delete-policy: HookSucceeded
 spec:
@@ -67,4 +67,3 @@ spec:
             limits:
               cpu: 100m
               memory: 128Mi
-...
