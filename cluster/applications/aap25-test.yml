@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: aap25-test3
+  name: aap25-test
   namespace: openshift-gitops
   annotations:
     argocd.argoproj.io/sync-wave: "1"
@@ -10,12 +10,12 @@ spec:
   project: default
   source:
     repoURL: https://github.com/lennysh/aap-openshift-argocd-gitops.git
-    path: app-aap25-test3
+    path: app-aap25-test
     targetRevision: HEAD
     kustomize: {}
   destination:
     server: https://kubernetes.default.svc
-    namespace: aap25-test3
+    namespace: aap25-test
   syncPolicy:
     # automated:
     #   prune: true

@@ -3,7 +3,7 @@ apiVersion: aap.ansible.com/v1alpha1
 kind: AnsibleAutomationPlatform
 metadata:
   name: aap
-  namespace: aap25-test3
+  namespace: aap25-test
   annotations:
     argocd.argoproj.io/sync-wave: "4"
   labels:

@@ -1,7 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: aap25-test3
+namespace: aap25-test
 
 resources:
   - 01-namespace.yml
@@ -22,4 +22,4 @@ patches:
       subjects:
         - kind: ServiceAccount
           name: installplan-approver
-          namespace: aap25-test3
+          namespace: aap25-test
