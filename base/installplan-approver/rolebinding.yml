@@ -5,10 +5,11 @@ metadata:
   name: installplan-approver
   annotations:
     argocd.argoproj.io/sync-wave: "10"
+    argocd.argoproj.io/hook: PostSync
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
   name: installplan-approver
 subjects:
   - kind: ServiceAccount
-    name: installplan-approver
+...
