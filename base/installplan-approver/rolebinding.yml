@@ -4,7 +4,7 @@ kind: RoleBinding
 metadata:
   name: installplan-approver
   annotations:
-    argocd.argoproj.io/sync-wave: "3.7"
+    argocd.argoproj.io/sync-wave: "5.2"
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
