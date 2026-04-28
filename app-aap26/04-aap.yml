@@ -25,7 +25,7 @@ spec:
     disabled: false
     name: eda
   hub:
-    disabled: false
+    disabled: true
     file_storage_size: 50Gi
     name: hub
     storage_type: file
