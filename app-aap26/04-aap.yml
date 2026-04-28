@@ -12,6 +12,7 @@ metadata:
     app.kubernetes.io/operator-version: ''
     app.kubernetes.io/part-of: aap
 spec:
+  idle_aap: false
   controller:
     disabled: false
     name: ac
