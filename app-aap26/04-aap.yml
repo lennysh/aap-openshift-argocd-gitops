@@ -15,6 +15,12 @@ spec:
   controller:
     disabled: false
     name: ac
+    ee_extra_env: |
+      - name: RECEPTOR_KUBE_SUPPORT_RECONNECT
+        value: enabled
+    extra_settings:
+      - setting: AWX_RUNNER_KEEPALIVE_SECONDS
+        value: 240
   eda:
     disabled: false
     name: eda
@@ -23,6 +29,11 @@ spec:
     file_storage_size: 50Gi
     name: hub
     storage_type: file
+    pulp_settings:
+      cache_enabled: false
+  mcp:
+    disabled: false
+    allow_write_operations: false
   lightspeed:
     disabled: true
   extra_settings:
