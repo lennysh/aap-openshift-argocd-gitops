@@ -20,8 +20,8 @@ spec:
     namespace: aap26
   syncPolicy:
     automated:
-      prune: true
-      selfHeal: true
+      prune: false
+      selfHeal: false
     syncOptions:
       - CreateNamespace=false
       - PrunePropagationPolicy=foreground
