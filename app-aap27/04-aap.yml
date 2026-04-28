@@ -40,7 +40,7 @@ spec:
     - setting: REDIRECT_IS_HTTPS
       value: '"True"'
   feature_flags:
-    FEATURE_POLICY_AS_CODE_ENABLED: true
+    DASHBOARD_COLLECTION: true
   image_pull_policy: IfNotPresent
   no_log: true
   redis_mode: standalone
