@@ -1,0 +1,48 @@
+---
+apiVersion: aap.ansible.com/v1alpha1
+kind: AnsibleAutomationPlatform
+metadata:
+  name: aap
+  namespace: aap27
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
+  labels:
+    app.kubernetes.io/managed-by: aap-operator
+    app.kubernetes.io/name: aap
+    app.kubernetes.io/operator-version: ''
+    app.kubernetes.io/part-of: aap
+spec:
+  controller:
+    disabled: false
+    name: ac
+    ee_extra_env: |
+      - name: RECEPTOR_KUBE_SUPPORT_RECONNECT
+        value: enabled
+    extra_settings:
+      - setting: AWX_RUNNER_KEEPALIVE_SECONDS
+        value: 240
+  eda:
+    disabled: false
+    name: eda
+  hub:
+    disabled: true
+    file_storage_size: 50Gi
+    name: hub
+    storage_type: file
+    pulp_settings:
+      cache_enabled: false
+  mcp:
+    disabled: false
+    allow_write_operations: false
+  lightspeed:
+    disabled: true
+  extra_settings:
+    - setting: REDIRECT_IS_HTTPS
+      value: '"True"'
+  feature_flags:
+    FEATURE_POLICY_AS_CODE_ENABLED: true
+  image_pull_policy: IfNotPresent
+  no_log: true
+  redis_mode: standalone
+  route_tls_termination_mechanism: Edge
+...
