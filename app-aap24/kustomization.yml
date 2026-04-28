@@ -8,18 +8,18 @@ resources:
   - 02-operatorgroup.yml
   - 03-subscription.yml
   - 04-automationcontroller.yml
-  - ../base/installplan-approver
+#   - ../base/installplan-approver
 
-patches:
-  - target:
-      kind: RoleBinding
-      name: installplan-approver
-    patch: |-
-      apiVersion: rbac.authorization.k8s.io/v1
-      kind: RoleBinding
-      metadata:
-        name: installplan-approver
-      subjects:
-        - kind: ServiceAccount
-          name: installplan-approver
-          namespace: aap24
+# patches:
+#   - target:
+#       kind: RoleBinding
+#       name: installplan-approver
+#     patch: |-
+#       apiVersion: rbac.authorization.k8s.io/v1
+#       kind: RoleBinding
+#       metadata:
+#         name: installplan-approver
+#       subjects:
+#         - kind: ServiceAccount
+#           name: installplan-approver
+#           namespace: aap24
