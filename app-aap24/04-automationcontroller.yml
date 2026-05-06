@@ -31,7 +31,7 @@ spec:
   postgres_keepalives_idle: 5
   postgres_keepalives_interval: 5
   postgres_keepalives: true
-  # postgres_storage_class: lvms-vg1
+  postgres_storage_class: lvms-vg1
   projects_persistence: false
   projects_storage_access_mode: ReadWriteMany
   projects_storage_size: 8Gi
