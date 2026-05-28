@@ -27,12 +27,13 @@ spec:
     disabled: true
     name: eda
   hub:
-    disabled: true
-    file_storage_size: 50Gi
+    disabled: false
+    file_storage_size: 1Ti
     name: hub
-    storage_type: file
+    storage_type: s3
     pulp_settings:
       cache_enabled: false
+    object_storage_s3_secret: aap27-hub-s3
   mcp:
     disabled: true
     allow_write_operations: false
