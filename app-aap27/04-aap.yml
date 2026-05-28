@@ -35,7 +35,7 @@ spec:
       cache_enabled: false
     object_storage_s3_secret: aap27-hub-s3
   mcp:
-    disabled: true
+    disabled: false
     allow_write_operations: false
   lightspeed:
     disabled: true
