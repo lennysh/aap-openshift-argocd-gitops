@@ -6,7 +6,7 @@ namespace: aap27
 resources:
   - 01-namespace.yml
   - 02-operatorgroup.yml
-  # - 03-subscription.yml
+  - 03-subscription.yml
   - 04-aap.yml
 #   - ../base/installplan-approver
 
