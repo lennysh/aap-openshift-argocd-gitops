@@ -12,8 +12,11 @@ metadata:
     app.kubernetes.io/operator-version: '2.5'
     app.kubernetes.io/part-of: aap
 spec:
-  idle_aap: false
+  idle_aap: true
+  database:
+    database_secret: external-postgres-configuration-gateway
   controller:
+    postgres_configuration_secret: external-postgres-configuration-controller
     garbage_collect_secrets: false
     disabled: false
     name: ac
