@@ -12,6 +12,7 @@ metadata:
     app.kubernetes.io/operator-version: ''
     app.kubernetes.io/part-of: ac
 spec:
+  idle_deployment: true
   admin_user: admin
   auto_upgrade: true
   create_preload_data: true
