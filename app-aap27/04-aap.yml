@@ -12,8 +12,13 @@ metadata:
     app.kubernetes.io/operator-version: ''
     app.kubernetes.io/part-of: aap
 spec:
-  idle_aap: false
+  idle_aap: true
+  database:
+    database_secret: external-postgres-configuration-gateway
+    idle_disabled: true
+    postgres_data_volume_init: false
   controller:
+    postgres_configuration_secret: external-postgres-configuration-controller
     garbage_collect_secrets: false
     disabled: false
     name: ac
@@ -26,7 +31,12 @@ spec:
   eda:
     disabled: true
     name: eda
+    database:
+      database_secret: external-postgres-configuration-eda
+    event_stream:
+      database_secret: external-postgres-configuration-eda-event-stream
   hub:
+    postgres_configuration_secret: external-postgres-configuration-hub
     disabled: false
     file_storage_size: 1Ti
     name: hub
@@ -45,6 +55,8 @@ spec:
   metrics:
     disabled: false
     name: metrics
+    database:
+      database_secret: external-postgres-configuration-metrics
   extra_settings:
     - setting: REDIRECT_IS_HTTPS
       value: '"True"'
