@@ -42,9 +42,9 @@ spec:
     pulp_settings:
       cache_enabled: false
     storage_type: s3
-  # mcp:
-  #   disabled: true
-  #   allow_write_operations: false
+  mcp:
+    disabled: true
+    allow_write_operations: false
   lightspeed:
     disabled: true
   extra_settings:
