@@ -39,11 +39,15 @@ spec:
     allow_write_operations: false
   lightspeed:
     disabled: true
+  metrics:
+    disabled: false
+    name: metrics
   extra_settings:
     - setting: REDIRECT_IS_HTTPS
       value: '"True"'
   feature_flags:
-    FEATURE_METRICS_SERVICE_ENABLED: true
+    # FEATURE_METRICS_SERVICE_ENABLED: true
+    FEATURE_DASHBOARD_COLLECTION_ENABLED: true
   image_pull_policy: IfNotPresent
   no_log: true
   redis_mode: standalone
