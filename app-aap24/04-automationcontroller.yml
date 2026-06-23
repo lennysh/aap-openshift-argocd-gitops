@@ -12,11 +12,11 @@ metadata:
     app.kubernetes.io/operator-version: ''
     app.kubernetes.io/part-of: ac
 spec:
-  idle_deployment: true
   admin_user: admin
   auto_upgrade: true
   create_preload_data: true
   garbage_collect_secrets: false
+  idle_deployment: true
   image_pull_policy: IfNotPresent
   ingress_type: Route
   ipv6_disabled: false
