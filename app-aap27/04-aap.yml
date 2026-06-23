@@ -37,6 +37,9 @@ spec:
   mcp:
     disabled: false
     allow_write_operations: false
+    extra_settings:
+      - setting: IGNORE_CERTIFICATE_ERRORS
+        value: false
   lightspeed:
     disabled: true
   metrics:
