@@ -12,7 +12,7 @@ metadata:
     app.kubernetes.io/operator-version: '2.5'
     app.kubernetes.io/part-of: aap
 spec:
-  idle_aap: false
+  idle_aap: true
   database:
     database_secret: external-postgres-configuration-gateway
   controller:
@@ -29,6 +29,10 @@ spec:
   eda:
     disabled: true
     name: eda
+    database:
+      database_secret: external-postgres-configuration-eda
+    event_stream:
+      database_secret: external-postgres-configuration-eda-event-stream
   hub:
     disabled: true
     file_storage_size: 50Gi
@@ -36,6 +40,7 @@ spec:
     storage_type: file
     pulp_settings:
       cache_enabled: false
+    postgres_configuration_secret: external-postgres-configuration-hub
   lightspeed:
     disabled: true
   extra_settings:
