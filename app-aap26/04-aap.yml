@@ -35,16 +35,16 @@ spec:
       database_secret: external-postgres-configuration-eda-event-stream
   hub:
     postgres_configuration_secret: external-postgres-configuration-hub
-    disabled: false
+    disabled: true
     file_storage_size: 1Ti
     name: hub
     object_storage_s3_secret: aap26-hub-s3
     pulp_settings:
       cache_enabled: false
     storage_type: s3
-  mcp:
-    disabled: false
-    allow_write_operations: false
+  # mcp:
+  #   disabled: true
+  #   allow_write_operations: false
   lightspeed:
     disabled: true
   extra_settings:
