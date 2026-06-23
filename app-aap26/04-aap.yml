@@ -12,7 +12,7 @@ metadata:
     app.kubernetes.io/operator-version: ''
     app.kubernetes.io/part-of: aap
 spec:
-  idle_aap: false
+  idle_aap: true
   database:
     database_secret: external-postgres-configuration-gateway
   controller:
@@ -45,6 +45,9 @@ spec:
   mcp:
     disabled: true
     allow_write_operations: false
+    extra_settings:
+      - setting: IGNORE_CERTIFICATE_ERRORS
+        value: false
   lightspeed:
     disabled: true
   extra_settings:
