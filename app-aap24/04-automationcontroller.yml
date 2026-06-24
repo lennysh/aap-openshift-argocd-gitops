@@ -36,7 +36,7 @@ spec:
   projects_persistence: false
   projects_storage_access_mode: ReadWriteMany
   projects_storage_size: 8Gi
-  replicas: 1
+  replicas: 0
   route_tls_termination_mechanism: Edge
   service_type: ClusterIP
   set_self_labels: true
