@@ -57,6 +57,7 @@ spec:
     name: metrics
     database:
       database_secret: external-postgres-configuration-metrics
+      externally_managed: true
   extra_settings:
     - setting: REDIRECT_IS_HTTPS
       value: '"True"'
