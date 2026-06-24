@@ -45,7 +45,7 @@ spec:
       cache_enabled: false
     storage_type: s3
   mcp:
-    disabled: true
+    disabled: false
     allow_write_operations: false
     extra_settings:
       - setting: IGNORE_CERTIFICATE_ERRORS
