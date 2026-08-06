@@ -22,6 +22,7 @@ spec:
   loadbalancer_ip: ''
   loadbalancer_port: 80
   loadbalancer_protocol: http
+  metrics_utility_console_enabled: false
   metrics_utility_cronjob_gather_schedule: '@hourly'
   metrics_utility_cronjob_report_schedule: '@monthly'
   metrics_utility_enabled: false
@@ -40,5 +41,23 @@ spec:
   route_tls_termination_mechanism: Edge
   service_type: ClusterIP
   set_self_labels: true
+  task_liveness_failure_threshold: 3
+  task_liveness_initial_delay: 5
+  task_liveness_period: 0
+  task_liveness_timeout: 1
+  task_manage_replicas: true
   task_privileged: false
+  task_readiness_failure_threshold: 3
+  task_readiness_initial_delay: 20
+  task_readiness_period: 0
+  task_readiness_timeout: 1
+  web_liveness_failure_threshold: 3
+  web_liveness_initial_delay: 5
+  web_liveness_period: 0
+  web_liveness_timeout: 1
+  web_manage_replicas: true
+  web_readiness_failure_threshold: 3
+  web_readiness_initial_delay: 20
+  web_readiness_period: 0
+  web_readiness_timeout: 1
 ...
