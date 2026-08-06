@@ -33,4 +33,14 @@ spec:
             - "--server"
             - "--log-level=debug"
             - "--addr=:8181"
+            - "--watch"
+            - "/policies"
+          volumeMounts:
+            - name: policies
+              mountPath: /policies
+              readOnly: true
+      volumes:
+        - name: policies
+          configMap:
+            name: opa-policies
 ...
