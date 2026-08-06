@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
         - name: opa
-          image: openpolicyagent/opa:latest-static
+          image: openpolicyagent/opa:1.19.0-static
           ports:
             - name: http
               containerPort: 8181
