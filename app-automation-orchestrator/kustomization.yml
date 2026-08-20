@@ -7,4 +7,4 @@ resources:
   - 03-subscription.yml
   - 04-instance-namespace.yml
   # - 05-secrets.yml
-  # - 06-automationorchestrator.yml
+  - 06-automationorchestrator.yml

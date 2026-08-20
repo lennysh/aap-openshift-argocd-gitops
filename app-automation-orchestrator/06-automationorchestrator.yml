@@ -1,0 +1,26 @@
+---
+apiVersion: aap.ansible.com/v1alpha1
+kind: AutomationOrchestrator
+metadata:
+  name: automation-orchestrator
+  namespace: automation-orchestrator
+  annotations:
+    argocd.argoproj.io/sync-wave: "6"
+spec:
+  ingress:
+    type: Route
+    host: automation-orchestrator.apps.ocp001.lennysh.net
+  postgres:
+    # BYO PostgreSQL host shared with other AAP components, or a dedicated server.
+    host: aap-ao-pg15.lennysh.net
+    port: 5432
+    sslMode: prefer
+    backendDatabase:
+      secretRef:
+        name: backend-db-secret
+    temporalDatabase:
+      secretRef:
+        name: temporal-db-secret
+  # secrets:
+  #   initialAdminPasswordSecretRef:
+  #     name: initial-admin-password
