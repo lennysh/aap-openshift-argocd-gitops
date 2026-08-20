@@ -1,0 +1,12 @@
+---
+# Adopts the OperatorGroup created during the manual OperatorHub install.
+# The generated name is preserved so Argo CD can manage the existing resource.
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: automation-orchestrator-operator-system-spxp4
+  namespace: automation-orchestrator-operator-system
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  upgradeStrategy: Default

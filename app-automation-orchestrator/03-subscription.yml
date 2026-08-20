@@ -1,0 +1,17 @@
+---
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: automation-orchestrator-operator
+  namespace: automation-orchestrator-operator-system
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+  labels:
+    operators.coreos.com/automation-orchestrator-operator.automation-orchestrator-operat: ''
+spec:
+  channel: stable
+  installPlanApproval: Automatic
+  name: automation-orchestrator-operator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  # startingCSV: automation-orchestrator-operator.v2026.8.1787147047
