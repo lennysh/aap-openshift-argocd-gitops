@@ -84,35 +84,6 @@ oc run psql-admin --rm -i --restart=Never -n automation-orchestrator \
   -- psql -h REPLACE_PG_HOST -U postgres -p 5432 -c "\l"
 ```
 
-## Example: Docker / Proxmox init script pattern
-
-If you provision PostgreSQL with `POSTGRES_CUSTOM_DATABASES` (one user per entry), a typical value is:
-
-```yaml
-POSTGRES_CUSTOM_DATABASES: >-
-  backend:backend:REPLACE_BACKEND_PASSWORD,
-  temporal:temporal:REPLACE_TEMPORAL_PASSWORD
-```
-
-That creates `backend` and `temporal` only. **`temporal_visibility` must be added separately**, because the init loop runs `CREATE USER` for each entry and cannot reuse the existing `temporal` user.
-
-Add this after your custom database loop in `init-isolated-databases.sh`:
-
-```bash
-if psql -U "$POSTGRES_USER" -d postgres -tAc "SELECT 1 FROM pg_database WHERE datname='temporal'" | grep -q 1 \
-   && ! psql -U "$POSTGRES_USER" -d postgres -tAc "SELECT 1 FROM pg_database WHERE datname='temporal_visibility'" | grep -q 1; then
-    echo "Creating temporal_visibility database for Temporal..."
-    psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
-        CREATE DATABASE temporal_visibility OWNER temporal;
-        GRANT ALL PRIVILEGES ON DATABASE temporal_visibility TO temporal;
-        REVOKE CONNECT ON DATABASE temporal_visibility FROM PUBLIC;
-        GRANT CONNECT ON DATABASE temporal_visibility TO temporal;
-EOSQL
-fi
-```
-
-On an **already running** PostgreSQL instance, run the SQL block under [Example SQL (manual setup)](#example-sql-manual-setup) instead of re-running init.
-
 ## Map databases to Kubernetes secrets
 
 Edit `05-secrets.yml` (never commit real values to the public repo):
