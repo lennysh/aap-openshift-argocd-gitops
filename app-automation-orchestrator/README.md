@@ -20,16 +20,15 @@ The PostgreSQL **host** is set on the `AutomationOrchestrator` CR (`spec.postgre
 
 ## Deployment order
 
-1. `01`–`04` — operator and instance namespace (safe in public git)
+1. `01`–`04` — operator and instance namespace
 2. **PostgreSQL** — create users and databases (this document)
 3. `05-secrets.yml` — cluster-specific credentials (gitignored)
-4. `06-automationorchestrator.yml` — CR with `postgres.host` and ingress host (gitignored or private branch)
+4. `06-automationorchestrator.yml` — `AutomationOrchestrator` CR (managed by Argo CD)
 
-Copy the examples before editing:
+Copy the secrets example before editing credentials:
 
 ```bash
 cp 05-secrets.example.yml 05-secrets.yml
-cp 06-automationorchestrator.example.yml 06-automationorchestrator.yml
 ```
 
 Uncomment `05-secrets.yml` in `kustomization.yml` when ready, or apply secrets with `oc apply -f 05-secrets.yml`.
@@ -140,7 +139,9 @@ oc apply -f 05-secrets.yml
 
 ## Configure the AutomationOrchestrator CR
 
-Edit `06-automationorchestrator.yml`:
+`06-automationorchestrator.yml` is managed in git and synced by Argo CD. Ensure PostgreSQL and `05-secrets.yml` are in place before the CR reconciles.
+
+Key fields:
 
 ```yaml
 spec:
@@ -177,4 +178,4 @@ Usually means `backend` and `temporal` exist but `temporal_visibility` does not.
 
 ### Public git repository
 
-Keep `05-secrets.yml` and `06-automationorchestrator.yml` out of git (see `.gitignore`). The public repo ships `05-secrets.example.yml` and operator manifests (`01`–`04`) only.
+Keep `05-secrets.yml` out of git (see `.gitignore`). The public repo ships `05-secrets.example.yml` for credentials and manages `06-automationorchestrator.yml` via Argo CD.
