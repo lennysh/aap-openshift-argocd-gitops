@@ -22,6 +22,16 @@ redhat-developer-hub:
         existingSecret: redhat-rhaap-portal-postgresql
     backstage:
       appConfig:
+        # Lab/playground: AAP uses the default OpenShift router cert. The RHAAP plugins
+        # use undici with rejectUnauthorized from checkSSL (NOT NODE_TLS_REJECT_UNAUTHORIZED).
+        ansible:
+          rhaap:
+            checkSSL: false
+        auth:
+          providers:
+            rhaap:
+              production:
+                checkSSL: false
         # Do not set catalog.providers.rhaap.production here — the chart renders
         # that key via catalog.providers.env and a duplicate key crashes the backend.
         permission:

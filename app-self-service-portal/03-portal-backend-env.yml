@@ -1,6 +1,5 @@
-# Lab/playground only: AAP gateway uses the default OpenShift router cert
-# (*.apps.<cluster>) which Node.js fetch() does not trust. Without this, OAuth
-# token exchange to ${AAP_HOST_URL}/o/token/ fails with "fetch failed".
+# Lab/playground only: supplementary TLS bypass for generic Node fetch(). RHAAP OAuth
+# and catalog use undici with checkSSL from app-config (values.yaml) — see README.
 # For production, replace with NODE_EXTRA_CA_CERTS + mounted router/ingress CA.
 apiVersion: v1
 kind: ConfigMap

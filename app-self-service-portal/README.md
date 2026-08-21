@@ -128,13 +128,18 @@ Then wait for the portal pod to reach 2/2 (~3 min OCI plugin init).
 ### AAP OAuth login fails (`fetch failed` on `/o/token/`)
 
 The portal backend POSTs to `${AAP_HOST_URL}/o/token/` during login. On clusters
-using the **default self-signed OpenShift router certificate**, Node.js
-`fetch()` rejects TLS (`SSL certificate problem: self-signed certificate in
-certificate chain`).
+using the **default self-signed OpenShift router certificate**, the RHAAP plugins
+use **undici** with `rejectUnauthorized` driven by `checkSSL` in app-config — not
+by `NODE_TLS_REJECT_UNAUTHORIZED`.
 
-This repo sets `NODE_TLS_REJECT_UNAUTHORIZED=0` via ConfigMap `portal-backend-env`
-(`03-portal-backend-env.yml`) — **lab/playground only**. Production should mount
-the ingress/router CA and set `NODE_EXTRA_CA_CERTS` instead.
+This repo sets (lab/playground only):
+
+```yaml
+upstream.backstage.appConfig.ansible.rhaap.checkSSL: false
+upstream.backstage.appConfig.auth.providers.rhaap.production.checkSSL: false
+```
+
+Production should mount the ingress/router CA instead of disabling verification.
 
 Also confirm the AAP OAuth app **Redirect URI** matches the new portal route:
 
