@@ -16,13 +16,8 @@ redhat-developer-hub:
   upstream:
     backstage:
       appConfig:
-        catalog:
-          providers:
-            rhaap:
-              production:
-                # AAP organization to synchronize (default in AAP is "Default")
-                orgs:
-                  - Default
+        # Do not set catalog.providers.rhaap.production here — the chart renders
+        # that key via catalog.providers.env and a duplicate key crashes the backend.
         permission:
           enabled: true
           rbac:

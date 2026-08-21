@@ -58,7 +58,7 @@ Only if you use private GitHub/GitLab repos for custom templates.
 `values.yaml` is referenced by the Helm Application via `$values/app-self-service-portal/values.yaml`. Key fields:
 
 1. `redhat-developer-hub.global.clusterRouterBase` — cluster router base (no `https://`)
-2. `catalog.providers.rhaap.production.orgs` — AAP organization name(s)
+2. AAP org sync uses chart defaults (`orgs: Default` under `catalog.providers.rhaap`); do not add a duplicate `production:` key in values — see comment in `values.yaml`
 3. `imageTagInfo` / chart `targetRevision` in `cluster/applications/self-service-portal.yml` per the [lifecycle page](https://access.redhat.com/page/ansible-automation-platform-self-service-automation-portal-lifecycle)
 
 ## After deployment
