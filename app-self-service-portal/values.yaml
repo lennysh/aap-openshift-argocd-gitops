@@ -1,0 +1,42 @@
+# Helm values for redhat-rhaap-portal (self-service automation portal).
+# See README.md for required OpenShift secrets and AAP pre-install steps.
+#
+# Find chart/plugin versions:
+#   helm search repo openshift-helm-charts/redhat-rhaap-portal --versions
+#   https://access.redhat.com/page/ansible-automation-platform-self-service-automation-portal-lifecycle
+
+redhat-developer-hub:
+  global:
+    # Required. Cluster router base only (no scheme), e.g. apps.cluster.example.com
+    clusterRouterBase: apps.ocp001.lennysh.net
+    # Recommended: OCI plug-in delivery from registry.redhat.io
+    pluginMode: oci
+    # Pin plug-in bundle version (align with lifecycle page and chart targetRevision)
+    imageTagInfo: "2.2"
+  upstream:
+    backstage:
+      appConfig:
+        catalog:
+          providers:
+            rhaap:
+              production:
+                # AAP organization to synchronize (default in AAP is "Default")
+                orgs:
+                  - Default
+        permission:
+          enabled: true
+          rbac:
+            admin:
+              superUsers:
+                - name: user:default/admin
+                - name: group:default/aap-admins
+              users:
+                - name: user:default/admin
+                - name: group:default/aap-admins
+            pluginsWithPermission:
+              - catalog
+              - scaffolder
+              - permission
+      extraEnvVars:
+        - name: CUSTOMER_SUPPORT_URL
+          value: https://access.redhat.com/support
