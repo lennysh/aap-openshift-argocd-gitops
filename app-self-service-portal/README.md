@@ -61,6 +61,30 @@ Only if you use private GitHub/GitLab repos for custom templates.
 2. AAP org sync uses chart defaults (`orgs: Default` under `catalog.providers.rhaap`); do not add a duplicate `production:` key in values — see comment in `values.yaml`
 3. `imageTagInfo` / chart `targetRevision` in `cluster/applications/self-service-portal.yml` per the [lifecycle page](https://access.redhat.com/page/ansible-automation-platform-self-service-automation-portal-lifecycle)
 
+### Helm list overrides (RHIDP-6082)
+
+Never partially override chart **lists** in `values.yaml` — Helm replaces the entire list:
+
+| Key | Effect if partially overridden |
+|-----|--------------------------------|
+| `extraEnvVars` | Drops `POSTGRESQL_ADMIN_PASSWORD`, AAP/OAuth env → backend crash |
+| `extraVolumes` | Drops plugin/registry volumes → broken init |
+| `catalog.providers` | Duplicate YAML key → backend crash |
+
+### Plugin cache PVC (avoid 3+ min OCI re-download every rollout)
+
+The chart default uses an **ephemeral** `volumeClaimTemplate` for `dynamic-plugins-root` — **each new pod gets its own 5Gi PVC** and re-downloads OCI plugins (~3 min). Every config fix that triggers a new ReplicaSet repeats this.
+
+This repo uses a **named PVC** (`03-dynamic-plugins-pvc.yml` + `extraVolumes` in `values.yaml`). After syncing that change once:
+
+```bash
+# Required once: RWO PVC cannot mount on two pods during RollingUpdate
+oc patch deployment redhat-rhaap-portal -n self-service-portal \
+  --type=strategic -p '{"spec":{"strategy":{"type":"Recreate"}}}'
+```
+
+Argo CD ignores `/spec/strategy` on this Deployment so the patch persists. **Do not** `oc rollout restart` Argo-managed workloads — let Argo roll the pod.
+
 ## After deployment
 
 1. Open the portal route and set the OAuth app **Redirect URI** to  

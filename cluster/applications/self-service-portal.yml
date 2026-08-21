@@ -49,4 +49,10 @@ spec:
       kind: Deployment
       jqPathExpressions:
         - .spec.template.metadata.annotations["kubectl.kubernetes.io/restartedAt"]
+    # Recreate required for RWO plugin PVC; chart does not expose strategy in values.
+    - group: apps
+      kind: Deployment
+      name: redhat-rhaap-portal
+      jsonPointers:
+        - /spec/strategy
 ...

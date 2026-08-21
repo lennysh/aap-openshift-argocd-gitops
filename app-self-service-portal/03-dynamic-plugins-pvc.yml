@@ -1,0 +1,14 @@
+# Stable plugin cache — avoids a new 5Gi ephemeral PVC on every Deployment rollout.
+# Paired with extraVolumes override in values.yaml (RHIDP-6082: full list required).
+# Deployment must use Recreate strategy (see README); patch once after first sync.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: redhat-rhaap-portal-dynamic-plugins-root
+  namespace: self-service-portal
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
