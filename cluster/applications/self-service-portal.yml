@@ -54,4 +54,6 @@ spec:
       name: redhat-rhaap-portal-postgresql
       jsonPointers:
         - /data
+        - /metadata/labels
+        - /metadata/annotations
 ...
