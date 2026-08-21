@@ -16,7 +16,7 @@ spec:
     - repoURL: https://charts.openshift.io/
       chart: redhat-rhaap-portal
       # Pin after validating on your cluster: helm search repo openshift-helm-charts/redhat-rhaap-portal --versions
-      targetRevision: "2.2.0"
+      targetRevision: "2.2.7"
       helm:
         releaseName: redhat-rhaap-portal
         valueFiles:
