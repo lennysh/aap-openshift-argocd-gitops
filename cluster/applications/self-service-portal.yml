@@ -49,4 +49,9 @@ spec:
       kind: Deployment
       jqPathExpressions:
         - .spec.template.metadata.annotations["kubectl.kubernetes.io/restartedAt"]
+    # Postgres secret is applied out-of-band; never let Helm rotate it on sync.
+    - kind: Secret
+      name: redhat-rhaap-portal-postgresql
+      jsonPointers:
+        - /data
 ...

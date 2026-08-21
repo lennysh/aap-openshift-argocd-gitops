@@ -29,6 +29,23 @@ Uncomment `02-secrets.yml` in `kustomization.yml` when ready, or apply secrets w
 
 Apply **before** the Helm Application syncs. Exact secret names and keys are required by the chart.
 
+### `redhat-rhaap-portal-postgresql`
+
+Embedded Postgres credentials for the portal backend. **Apply before the first Helm
+sync** and keep passwords stable — Helm must not manage this secret
+(`postgresql.auth.existingSecret` in `values.yaml`).
+
+| Key | Used by |
+|-----|---------|
+| `postgres-password` | Postgres superuser; backend `${POSTGRESQL_ADMIN_PASSWORD}` |
+| `password` | `bn_backstage` application user; backend `${POSTGRES_PASSWORD}` |
+
+Generate once (example):
+
+```bash
+openssl rand -base64 12 | head -c 10   # repeat for each key
+```
+
 ### `secrets-rhaap-portal`
 
 | Key | Description |
@@ -83,14 +100,30 @@ Operational rules:
 
 ### Postgres auth failures (`password authentication failed for user "postgres"`)
 
-The backend reads `${POSTGRESQL_ADMIN_PASSWORD}` from the Helm-managed secret
-`redhat-rhaap-portal-postgresql` key `postgres-password`. If many failed rollouts
-left the embedded Postgres data dir initialized with a different password, auth
-will fail even though the Deployment env vars look correct.
+The backend reads `${POSTGRESQL_ADMIN_PASSWORD}` from secret
+`redhat-rhaap-portal-postgresql` key `postgres-password`. That secret is **out of
+band** (`02-secrets.yml` + `postgresql.auth.existingSecret` in `values.yaml`) so
+Helm/Argo cannot rotate it on sync.
 
-**Fix:** scale the portal Deployment to 0, delete the Postgres pod and its data
-PVC (`data-redhat-rhaap-portal-postgresql-0`), wait for Postgres to recreate,
-then scale the portal back to 1. On a fresh namespace this should not occur.
+**Root cause (if this recurs):** the Bitnami subchart generates random passwords
+when Helm manages the secret. Any Argo sync can rewrite `redhat-rhaap-portal-postgresql`
+while the Postgres data PVC still holds the old password. Pods started before the
+rotation keep working; new pods fail auth.
+
+**Prevention:** apply `redhat-rhaap-portal-postgresql` from `02-secrets.yml` before
+the first Helm sync and keep `existingSecret` set (already in `values.yaml`).
+
+**Recovery when secret and data dir diverge:**
+
+```bash
+oc scale deploy/redhat-rhaap-portal -n self-service-portal --replicas=0
+oc delete pod redhat-rhaap-portal-postgresql-0 -n self-service-portal --wait=false
+oc delete pvc data-redhat-rhaap-portal-postgresql-0 -n self-service-portal
+oc wait --for=condition=Ready pod/redhat-rhaap-portal-postgresql-0 -n self-service-portal --timeout=300s
+oc scale deploy/redhat-rhaap-portal -n self-service-portal --replicas=1
+```
+
+Then wait for the portal pod to reach 2/2 (~3 min OCI plugin init).
 
 ### AAP OAuth login fails (`fetch failed` on `/o/token/`)
 
@@ -100,7 +133,7 @@ using the **default self-signed OpenShift router certificate**, Node.js
 certificate chain`).
 
 This repo sets `NODE_TLS_REJECT_UNAUTHORIZED=0` via ConfigMap `portal-backend-env`
-(`04-portal-backend-env.yml`) — **lab/playground only**. Production should mount
+(`03-portal-backend-env.yml`) — **lab/playground only**. Production should mount
 the ingress/router CA and set `NODE_EXTRA_CA_CERTS` instead.
 
 Also confirm the AAP OAuth app **Redirect URI** matches the new portal route:
