@@ -71,19 +71,15 @@ Never partially override chart **lists** in `values.yaml` — Helm replaces the 
 | `extraVolumes` | Drops plugin/registry volumes → broken init |
 | `catalog.providers` | Duplicate YAML key → backend crash |
 
-### Plugin cache PVC (avoid 3+ min OCI re-download every rollout)
+### OCI plugin init (~3 min per new pod)
 
-The chart default uses an **ephemeral** `volumeClaimTemplate` for `dynamic-plugins-root` — **each new pod gets its own 5Gi PVC** and re-downloads OCI plugins (~3 min). Every config fix that triggers a new ReplicaSet repeats this.
+The chart uses an **ephemeral** `volumeClaimTemplate` for `dynamic-plugins-root` — each new pod gets its own 5Gi PVC and downloads OCI plugins (~3 min). That is chart-default and the most GitOps-stable option.
 
-This repo uses a **named PVC** (`03-dynamic-plugins-pvc.yml` + `extraVolumes` in `values.yaml`). After syncing that change once:
+Operational rules:
 
-```bash
-# Required once: RWO PVC cannot mount on two pods during RollingUpdate
-oc patch deployment redhat-rhaap-portal -n self-service-portal \
-  --type=strategic -p '{"spec":{"strategy":{"type":"Recreate"}}}'
-```
-
-Argo CD ignores `/spec/strategy` on this Deployment so the patch persists. **Do not** `oc rollout restart` Argo-managed workloads — let Argo roll the pod.
+- **One sync at a time** — let Argo finish before pushing another values change.
+- **Do not** `oc rollout restart` — stacked rollouts leave duplicate pods and orphaned plugin PVCs.
+- After a rollout settles, prune unused `*-dynamic-plugins-root` PVCs (keep the one bound to the running pod).
 
 ## After deployment
 

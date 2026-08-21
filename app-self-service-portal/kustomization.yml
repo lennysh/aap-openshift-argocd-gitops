@@ -6,4 +6,3 @@ namespace: self-service-portal
 resources:
   - 01-namespace.yml
   # - 02-secrets.yml
-  - 03-dynamic-plugins-pvc.yml
