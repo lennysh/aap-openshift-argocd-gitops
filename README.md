@@ -1,6 +1,6 @@
-# Ansible Automation Platform on OpenShift with ArgoCD GitOps
+# argocd-playground
 
-GitOps-managed deployment of [Ansible Automation Platform (AAP)](https://www.redhat.com/en/technologies/management/ansible) on OpenShift using ArgoCD and Kustomize.
+Argo CD GitOps for AAP, Automation Orchestrator, and related apps on OpenShift using Kustomize.
 
 ## Overview
 
@@ -29,8 +29,8 @@ This repository provides a complete GitOps workflow for deploying Ansible Automa
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/lennysh/aap-openshift-argocd-gitops-demo.git
-cd aap-openshift-argocd-gitops-demo
+git clone https://github.com/lennysh/argocd-playground.git
+cd argocd-playground
 ```
 
 ### 2. Update Repository URL (if forking)

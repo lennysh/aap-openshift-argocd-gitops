@@ -11,7 +11,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/lennysh/aap-openshift-argocd-gitops.git
+    repoURL: https://github.com/lennysh/argocd-playground.git
     path: app-aap27
     targetRevision: HEAD
     # kustomize: {}
