@@ -81,6 +81,17 @@ Operational rules:
 - **Do not** `oc rollout restart` — stacked rollouts leave duplicate pods and orphaned plugin PVCs.
 - After a rollout settles, prune unused `*-dynamic-plugins-root` PVCs (keep the one bound to the running pod).
 
+### Postgres auth failures (`password authentication failed for user "postgres"`)
+
+The backend reads `${POSTGRESQL_ADMIN_PASSWORD}` from the Helm-managed secret
+`redhat-rhaap-portal-postgresql` key `postgres-password`. If many failed rollouts
+left the embedded Postgres data dir initialized with a different password, auth
+will fail even though the Deployment env vars look correct.
+
+**Fix:** scale the portal Deployment to 0, delete the Postgres pod and its data
+PVC (`data-redhat-rhaap-portal-postgresql-0`), wait for Postgres to recreate,
+then scale the portal back to 1. On a fresh namespace this should not occur.
+
 ## After deployment
 
 1. Open the portal route and set the OAuth app **Redirect URI** to  
