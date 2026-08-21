@@ -92,6 +92,21 @@ will fail even though the Deployment env vars look correct.
 PVC (`data-redhat-rhaap-portal-postgresql-0`), wait for Postgres to recreate,
 then scale the portal back to 1. On a fresh namespace this should not occur.
 
+### AAP OAuth login fails (`fetch failed` on `/o/token/`)
+
+The portal backend POSTs to `${AAP_HOST_URL}/o/token/` during login. On clusters
+using the **default self-signed OpenShift router certificate**, Node.js
+`fetch()` rejects TLS (`SSL certificate problem: self-signed certificate in
+certificate chain`).
+
+This repo sets `NODE_TLS_REJECT_UNAUTHORIZED=0` via ConfigMap `portal-backend-env`
+(`04-portal-backend-env.yml`) — **lab/playground only**. Production should mount
+the ingress/router CA and set `NODE_EXTRA_CA_CERTS` instead.
+
+Also confirm the AAP OAuth app **Redirect URI** matches the new portal route:
+
+`https://redhat-rhaap-portal-self-service-portal.apps.ocp001.lennysh.net/api/auth/rhaap/handler/frame`
+
 ## After deployment
 
 1. Open the portal route and set the OAuth app **Redirect URI** to  

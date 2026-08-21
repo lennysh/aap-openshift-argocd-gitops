@@ -35,3 +35,6 @@ redhat-developer-hub:
         # Do not override extraEnvVars here — Helm replaces the whole list and
         # drops POSTGRESQL_ADMIN_PASSWORD, AAP/OAuth env, etc. (RHIDP-6082).
         # Do not override extraVolumes — use chart-default ephemeral plugin PVC.
+      # Trust self-signed OpenShift router cert for server-side AAP OAuth fetch.
+      extraEnvVarsCM:
+        - portal-backend-env

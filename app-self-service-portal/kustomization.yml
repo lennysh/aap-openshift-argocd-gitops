@@ -5,4 +5,5 @@ namespace: self-service-portal
 
 resources:
   - 01-namespace.yml
+  - 04-portal-backend-env.yml
   # - 02-secrets.yml

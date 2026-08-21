@@ -1,0 +1,11 @@
+# Lab/playground only: AAP gateway uses the default OpenShift router cert
+# (*.apps.<cluster>) which Node.js fetch() does not trust. Without this, OAuth
+# token exchange to ${AAP_HOST_URL}/o/token/ fails with "fetch failed".
+# For production, replace with NODE_EXTRA_CA_CERTS + mounted router/ingress CA.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: portal-backend-env
+  namespace: self-service-portal
+data:
+  NODE_TLS_REJECT_UNAUTHORIZED: "0"
