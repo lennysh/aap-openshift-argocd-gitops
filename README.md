@@ -245,6 +245,12 @@ This repository also includes configurations for:
 
 See their respective directories for configuration details.
 
+## Related repos
+
+- [cheat-sheets](https://github.com/lennysh/cheat-sheets) — copy-paste notes (AAP, Automation Orchestrator, OpenShift, …)
+- [opa-playground](https://github.com/lennysh/opa-playground) — AAP OPA policies
+- [openshift-playground](https://github.com/lennysh/openshift-playground) — OpenShift / AAP operator utilities
+
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
