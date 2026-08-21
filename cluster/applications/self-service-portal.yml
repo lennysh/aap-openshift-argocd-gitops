@@ -20,11 +20,10 @@ spec:
       helm:
         releaseName: redhat-rhaap-portal
         valueFiles:
-          - $values/values.yaml
+          - $values/app-self-service-portal/values.yaml
     - repoURL: https://github.com/lennysh/argocd-playground.git
       targetRevision: HEAD
       ref: values
-      path: app-self-service-portal
   destination:
     server: https://kubernetes.default.svc
     namespace: self-service-portal

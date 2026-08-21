@@ -55,7 +55,7 @@ Only if you use private GitHub/GitLab repos for custom templates.
 
 ## Configure Git values
 
-`values.yaml` is referenced by the Helm Application via `$values/values.yaml`. Key fields:
+`values.yaml` is referenced by the Helm Application via `$values/app-self-service-portal/values.yaml`. Key fields:
 
 1. `redhat-developer-hub.global.clusterRouterBase` — cluster router base (no `https://`)
 2. `catalog.providers.rhaap.production.orgs` — AAP organization name(s)
