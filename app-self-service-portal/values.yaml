@@ -32,6 +32,5 @@ redhat-developer-hub:
               - catalog
               - scaffolder
               - permission
-      extraEnvVars:
-        - name: CUSTOMER_SUPPORT_URL
-          value: https://access.redhat.com/support
+        # Do not override extraEnvVars here — Helm replaces the whole list and
+        # drops POSTGRESQL_ADMIN_PASSWORD, AAP/OAuth env, etc. (RHIDP-6082).
