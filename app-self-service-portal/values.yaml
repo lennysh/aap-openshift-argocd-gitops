@@ -6,12 +6,6 @@
 #   https://access.redhat.com/page/ansible-automation-platform-self-service-automation-portal-lifecycle
 
 redhat-developer-hub:
-  # Embedded Postgres credentials must be out-of-band (02-secrets.yml). Without
-  # existingSecret, Bitnami Helm regenerates random passwords on Argo sync while
-  # the data PVC keeps the old password → auth failures on every rollout.
-  postgresql:
-    auth:
-      existingSecret: redhat-rhaap-portal-postgresql
   global:
     # Required. Cluster router base only (no scheme), e.g. apps.cluster.example.com
     clusterRouterBase: apps.ocp001.lennysh.net
@@ -20,6 +14,12 @@ redhat-developer-hub:
     # Pin plug-in bundle version (align with lifecycle page and chart targetRevision)
     imageTagInfo: "2.2"
   upstream:
+    # Embedded Postgres credentials must be out-of-band (02-secrets.yml). Without
+    # existingSecret, Bitnami Helm regenerates random passwords on Argo sync while
+    # the data PVC keeps the old password → auth failures on every rollout.
+    postgresql:
+      auth:
+        existingSecret: redhat-rhaap-portal-postgresql
     backstage:
       appConfig:
         # Do not set catalog.providers.rhaap.production here — the chart renders
