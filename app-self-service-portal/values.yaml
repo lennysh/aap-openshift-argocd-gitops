@@ -34,31 +34,30 @@ redhat-developer-hub:
               - permission
         # Do not override extraEnvVars here — Helm replaces the whole list and
         # drops POSTGRESQL_ADMIN_PASSWORD, AAP/OAuth env, etc. (RHIDP-6082).
-        #
-        # Replace ephemeral per-pod plugin PVC with a stable named claim (see
-        # 03-dynamic-plugins-pvc.yml). Full extraVolumes list required (RHIDP-6082).
-        extraVolumes:
-          - name: dynamic-plugins-root
-            persistentVolumeClaim:
-              claimName: redhat-rhaap-portal-dynamic-plugins-root
-          - name: dynamic-plugins
-            configMap:
-              defaultMode: 420
-              name: redhat-rhaap-portal-dynamic-plugins
-              optional: true
-          - name: dynamic-plugins-npmrc
-            secret:
-              defaultMode: 420
-              optional: true
-              secretName: redhat-rhaap-portal-dynamic-plugins-npmrc
-          - name: dynamic-plugins-registry-auth
-            secret:
-              defaultMode: 416
-              optional: true
-              secretName: redhat-rhaap-portal-dynamic-plugins-registry-auth
-          - name: npmcacache
-            emptyDir: {}
-          - name: extensions-catalog
-            emptyDir: {}
-          - name: temp
-            emptyDir: {}
+      # Replace ephemeral per-pod plugin PVC with a stable named claim (see
+      # 03-dynamic-plugins-pvc.yml). Full extraVolumes list required (RHIDP-6082).
+      extraVolumes:
+        - name: dynamic-plugins-root
+          persistentVolumeClaim:
+            claimName: redhat-rhaap-portal-dynamic-plugins-root
+        - name: dynamic-plugins
+          configMap:
+            defaultMode: 420
+            name: redhat-rhaap-portal-dynamic-plugins
+            optional: true
+        - name: dynamic-plugins-npmrc
+          secret:
+            defaultMode: 420
+            optional: true
+            secretName: redhat-rhaap-portal-dynamic-plugins-npmrc
+        - name: dynamic-plugins-registry-auth
+          secret:
+            defaultMode: 416
+            optional: true
+            secretName: redhat-rhaap-portal-dynamic-plugins-registry-auth
+        - name: npmcacache
+          emptyDir: {}
+        - name: extensions-catalog
+          emptyDir: {}
+        - name: temp
+          emptyDir: {}
