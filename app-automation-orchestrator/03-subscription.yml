@@ -10,7 +10,7 @@ metadata:
     operators.coreos.com/automation-orchestrator-operator.automation-orchestrator-operat: ''
 spec:
   channel: stable
-  installPlanApproval: Automatic
+  installPlanApproval: Manual
   name: automation-orchestrator-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
